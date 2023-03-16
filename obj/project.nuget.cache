@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "AHWwAR+d085nV75HEVchFfO6qal4pzkOu3Q41vzHPGWy7SH9SYDKV3qiT/M2fDOxTErzcsFfVzaQzpDj8RBqMQ==",
+  "success": true,
+  "projectFilePath": "D:\\1. Personal\\4. Studing\\Programming\\.NET\\7. ReenbitCampTestTask\\ReenbitCamp_TestTask_backend\\ReenbitCamp_TestTask_backend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kaktu\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\kaktu\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\kaktu\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\kaktu\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\kaktu\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\kaktu\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
