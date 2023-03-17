@@ -1,11 +1,19 @@
+using ReenbitCamp_TestTask_backend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Add configuration
+
+builder.Configuration.SetBasePath(builder.Environment.ContentRootPath);
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddEnvironmentVariables();
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IBlobService, BlobService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
