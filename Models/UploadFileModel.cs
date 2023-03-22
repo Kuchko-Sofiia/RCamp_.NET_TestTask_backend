@@ -2,10 +2,9 @@
 
 namespace ReenbitCamp_TestTask_backend.Models
 {
-    public class TestTaskData
+    public class UploadFileModel
     {
-        [Required]
-        [EmailAddress(ErrorMessage = "Email is not valid")]
+        public IFormFile File { get; set; }
         public string Email { get; set; }
     }
 }

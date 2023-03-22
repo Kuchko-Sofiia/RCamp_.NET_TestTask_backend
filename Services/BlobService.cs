@@ -6,7 +6,7 @@ namespace ReenbitCamp_TestTask_backend.Services
 {
     public class BlobService : IBlobService
     {
-        public async Task<string> UploadFileToBlobAsync(IFormFile file, string containerName, string connectionString)
+        public async Task<string> UploadFileToBlobAsync(IFormFile file, string containerName, string connectionString, string emailAddress)
         {
             var blobContainerClient = new BlobContainerClient(connectionString, containerName);
             await blobContainerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer);
@@ -22,6 +22,10 @@ namespace ReenbitCamp_TestTask_backend.Services
                     HttpHeaders = new BlobHttpHeaders
                     {
                         ContentType = file.ContentType
+                    },
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "emailAddress", emailAddress }
                     }
                 });
             }

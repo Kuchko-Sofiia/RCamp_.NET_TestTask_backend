@@ -1,27 +1,17 @@
+using ReenbitCamp_TestTask_backend.Extensions;
 using ReenbitCamp_TestTask_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add configuration
-
-builder.Configuration.SetBasePath(builder.Environment.ContentRootPath);
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-builder.Configuration.AddEnvironmentVariables();
+builder.Host.ConfigureApplication();
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IBlobService, BlobService>();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin",
-        builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-});
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddSwaggerServices();
+builder.Services.AddCustomServices();
+
+// Build the app.
 
 var app = builder.Build();
 
@@ -31,11 +21,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
+app.UseCors();
 app.UseHttpsRedirection();
+app.UseRouting();
 
-app.UseCors("AllowAnyOrigin"); // apply the CORS policy here
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

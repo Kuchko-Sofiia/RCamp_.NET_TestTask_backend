@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using ReenbitCamp_TestTask_backend.Models;
 using ReenbitCamp_TestTask_backend.Services;
 
 namespace ReenbitCamp_TestTask_backend.Controllers
@@ -19,15 +20,30 @@ namespace ReenbitCamp_TestTask_backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile([FromForm] IFormFile file, [FromForm] string? email)
+        public async Task<IActionResult> UploadFile([FromForm] UploadFileModel model)
         {
-            //TODO: implement the action
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage).ToList();
+                return BadRequest(errors);
+            }
+
             var connectionString = _configuration.GetValue<string>("BlobStorage:ConnectionString");
             var containerName = _configuration.GetValue<string>("BlobStorage:ContainerName");
 
-            string fileName = _blobService.UploadFileToBlobAsync(file, containerName, connectionString).Result;
+            try
+            {
+                string fileName = await _blobService.UploadFileToBlobAsync(model.File, containerName, connectionString, model.Email);
 
-            return Ok($"Done. FileName: {fileName}; Email: {email}");
+                return Ok($"The file \"{fileName}\" was successfully uploaded.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while uploading file to blob storage.");
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing the file.");
+            }
         }
     }
 }
