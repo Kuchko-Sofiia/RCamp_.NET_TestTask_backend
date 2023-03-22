@@ -1,11 +1,17 @@
+using ReenbitCamp_TestTask_backend.Extensions;
+using ReenbitCamp_TestTask_backend.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.ConfigureApplication();
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddSwaggerServices();
+builder.Services.AddCustomServices();
+
+// Build the app.
 
 var app = builder.Build();
 
@@ -15,9 +21,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
+app.UseCors();
 app.UseHttpsRedirection();
+app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
